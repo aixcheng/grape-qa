@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#2c3e50"/>
+    </marker>
+    <filter id="sh"><feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.08"/></filter>
+  </defs>
+  <style>
+    text { font-family: "Microsoft YaHei","SimHei",sans-serif; }
+    .tt { font-size: 18px; font-weight: bold; fill: #1a1a2e; text-anchor: middle; }
+    .lbl { font-size: 11px; fill: #2c3e50; text-anchor: middle; }
+    .sm { font-size: 9px; fill: #555; text-anchor: middle; }
+    .phase { font-size: 12px; font-weight: bold; fill: #1a1a2e; }
+  </style>
+  <rect width="1100" height="620" fill="#fafbfc"/>
+  <text x="550" y="28" class="tt">图X  基于HybridRAG的问答算法处理流程（8步流水线）</text>
+
+  <!-- Layer bars -->
+  <rect x="10" y="52" width="1080" height="75" fill="#e8f4f8" rx="4" stroke="#ddd"/>
+  <text x="20" y="68" class="phase">① 实体识别层</text>
+
+  <rect x="10" y="130" width="1080" height="52" fill="#e8f8e8" rx="4" stroke="#ddd"/>
+  <text x="20" y="146" class="phase">② 实体解析层</text>
+
+  <rect x="10" y="185" width="1080" height="120" fill="#fff8e1" rx="4" stroke="#ddd"/>
+  <text x="20" y="201" class="phase">③ 知识检索层  [双路并行]</text>
+
+  <rect x="10" y="308" width="1080" height="52" fill="#f3e5f5" rx="4" stroke="#ddd"/>
+  <text x="20" y="324" class="phase">④ 知识融合层</text>
+
+  <rect x="10" y="363" width="1080" height="90" fill="#fce4ec" rx="4" stroke="#ddd"/>
+  <text x="20" y="379" class="phase">⑤ 生成层</text>
+
+  <!-- Layer 1 boxes -->
+  <rect x="50" y="80" width="180" height="36" rx="6" fill="#fff" stroke="#2c3e50" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="140" y="103" class="lbl" font-size="11">Step 1: AC自动机精确匹配</text>
+
+  <polygon points="270,82 310,98 270,114 230,98" fill="#fff3e0" stroke="#2c3e50" stroke-width="1.5"/>
+  <text x="270" y="98" class="sm" font-size="8">命中?</text>
+
+  <rect x="325" y="80" width="180" height="36" rx="6" fill="#e8e8f8" stroke="#2c3e50" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="415" y="103" class="lbl" font-size="11">BGE语义回退 (cosine&gt;0.6)</text>
+
+  <!-- Arrows -->
+  <line x1="230" y1="98" x2="252" y2="98" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="310" y1="98" x2="325" y2="98" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Downward -->
+  <line x1="505" y1="116" x2="505" y2="152" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <polygon points="505,155 535,168 505,181 475,168" fill="#fff3e0" stroke="#2c3e50" stroke-width="1.5"/>
+  <text x="505" y="168" class="sm" font-size="8">类型?</text>
+
+  <line x1="475" y1="168" x2="440" y2="168" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="455" y="162" class="sm" font-size="8">Alias</text>
+
+  <rect x="250" y="152" width="180" height="36" rx="6" fill="#fff" stroke="#2c3e50" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="340" y="175" class="lbl" font-size="11">Step 2: 别名解析 ALIAS_OF</text>
+
+  <line x1="535" y1="168" x2="570" y2="168" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="555" y="162" class="sm" font-size="8">Symptom/Part</text>
+
+  <rect x="580" y="152" width="200" height="36" rx="6" fill="#fff" stroke="#2c3e50" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="680" y="175" class="lbl" font-size="11">Step 3: 反向诊断 REVERSE_MAP</text>
+
+  <!-- Down to retrieval layer -->
+  <line x1="340" y1="188" x2="340" y2="210" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="680" y1="188" x2="680" y2="210" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <polygon points="510,205 545,225 510,245 475,225" fill="#fff3e0" stroke="#2c3e50" stroke-width="1.5"/>
+  <text x="510" y="225" class="sm" font-size="8">Disease/Pest → 双路</text>
+
+  <!-- KG Path -->
+  <line x1="475" y1="225" x2="380" y2="225" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="100" y="210" width="220" height="42" rx="6" fill="#fff" stroke="#2c3e50" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="210" y="228" class="lbl">Step 4: 图谱检索 (Cypher)</text>
+  <text x="210" y="244" class="sm">MATCH (e)-[r]->(n) → K_graph</text>
+
+  <!-- Vec Path -->
+  <line x1="545" y1="225" x2="640" y2="225" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="660" y="210" width="230" height="42" rx="6" fill="#fff" stroke="#2c3e50" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="775" y="228" class="lbl">Step 5: 向量检索 (ChromaDB)</text>
+  <text x="775" y="244" class="sm">BGE(Q) → cosine → Top-5 K_vector</text>
+
+  <!-- Down arrows to KG retrieval (Alias goes to parallel too) -->
+  <line x1="340" y1="270" x2="340" y2="295" stroke="#2c3e50" stroke-width="1.2"/>
+  <line x1="340" y1="295" x2="210" y2="295" stroke="#2c3e50" stroke-width="1.2"/>
+  <line x1="210" y1="295" x2="210" y2="252" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Both to Fusion -->
+  <line x1="210" y1="252" x2="210" y2="340" stroke="#2c3e50" stroke-width="1.5"/>
+  <line x1="775" y1="252" x2="775" y2="340" stroke="#2c3e50" stroke-width="1.5"/>
+  <line x1="210" y1="340" x2="500" y2="340" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="775" y1="340" x2="500" y2="340" stroke="#2c3e50" stroke-width="1.5"/>
+
+  <!-- Fusion -->
+  <rect x="410" y="315" width="220" height="36" rx="6" fill="#fff" stroke="#2c3e50" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="520" y="338" class="lbl">Step 6: 知识融合 (去重+分组标注) → Context</text>
+
+  <line x1="520" y1="351" x2="520" y2="380" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Prompt -->
+  <rect x="230" y="385" width="230" height="50" rx="6" fill="#fff" stroke="#2c3e50" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="345" y="408" class="lbl">Step 7: 提示词构建</text>
+  <text x="345" y="426" class="sm">Role + Knowledge + History + Constraints</text>
+
+  <line x1="460" y1="435" x2="540" y2="435" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- LLM -->
+  <rect x="550" y="385" width="260" height="50" rx="6" fill="#fce4ec" stroke="#2c3e50" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="680" y="408" class="lbl" font-size="11">Step 8: DeepSeek-chat 答案生成</text>
+  <text x="680" y="426" class="sm">t=0.7 max_tokens=1024 → Answer + Sources</text>
+
+  <!-- End -->
+  <line x1="810" y1="435" x2="880" y2="435" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="830" y="455" width="200" height="30" rx="15" fill="#e74c3c" filter="url(#sh)"/>
+  <text x="930" y="475" class="lbl" fill="#fff" font-size="10">END: 答案A + 引用来源Sources</text>
+
+  <!-- User input -->
+  <rect x="50" y="52" width="160" height="26" rx="13" fill="#27ae60" filter="url(#sh)"/>
+  <text x="130" y="70" class="lbl" fill="#fff" font-size="10">START: 用户问题Q</text>
+  <line x1="130" y1="78" x2="130" y2="95" stroke="#2c3e50" stroke-width="1.5"/>
+  <line x1="130" y1="95" x2="140" y2="95" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+</svg>

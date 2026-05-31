@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 600">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#2c3e50"/>
+    </marker>
+    <filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.1"/></filter>
+  </defs>
+  <style>
+    text { font-family: "Microsoft YaHei","SimHei",sans-serif; }
+    .title { font-size: 18px; font-weight: bold; fill: #1a1a2e; text-anchor: middle; }
+    .lbl { font-size: 12px; fill: #2c3e50; text-anchor: middle; }
+    .sm { font-size: 10px; fill: #555; text-anchor: middle; }
+  </style>
+  <rect width="950" height="600" fill="#fafbfc"/>
+  <text x="475" y="30" class="title">图X  反向诊断候选评分算法流程</text>
+
+  <!-- Start -->
+  <rect x="50" y="60" width="200" height="38" rx="19" fill="#27ae60" filter="url(#shadow)"/>
+  <text x="150" y="84" class="lbl" fill="#fff">START: 识别到Symptom/Part</text>
+  <line x1="150" y1="98" x2="150" y2="120" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 1 -->
+  <rect x="50" y="125" width="240" height="60" rx="6" fill="#e8f4f8" stroke="#2c3e50" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="170" y="148" class="lbl">Step 1: 查询REVERSE_MAP</text>
+  <text x="170" y="166" class="sm">获取候选Disease/Pest列表C</text>
+  <text x="170" y="180" class="sm">(预构建123条映射)</text>
+  <line x1="170" y1="185" x2="170" y2="207" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 2 -->
+  <rect x="50" y="212" width="240" height="50" rx="6" fill="#e8f4f8" stroke="#2c3e50" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="170" y="235" class="lbl">Step 2: 初始化评分</text>
+  <text x="170" y="253" class="sm">每个候选实体 Score(c_i) = 1</text>
+  <line x1="290" y1="237" x2="340" y2="237" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Diamond 1 -->
+  <polygon points="420,200 510,237 420,274 330,237" fill="#fff3e0" stroke="#2c3e50" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="420" y="232" class="lbl" font-size="10">Step 3: 交叉验证?</text>
+  <text x="420" y="248" class="sm" font-size="9">c_i其他Symptom/Part ∈ Q ?</text>
+  <line x1="510" y1="237" x2="555" y2="237" stroke="#2c3e50" stroke-width="1.5"/>
+  <line x1="555" y1="237" x2="555" y2="170" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="522" y="230" class="sm" font-size="9">Y</text>
+  <rect x="500" y="138" width="110" height="36" rx="6" fill="#e8f8e8" stroke="#27ae60" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="555" y="160" class="lbl" fill="#27ae60">Score += 2</text>
+  <line x1="420" y1="274" x2="420" y2="300" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="430" y="292" class="sm" font-size="9">N</text>
+  <rect x="365" y="304" width="110" height="36" rx="6" fill="#f5f5f5" stroke="#999" stroke-width="1" filter="url(#shadow)"/>
+  <text x="420" y="326" class="lbl" fill="#999">Score不变</text>
+
+  <!-- Merge flow -->
+  <line x1="555" y1="174" x2="660" y2="174" stroke="#2c3e50" stroke-width="1.2"/>
+  <line x1="420" y1="340" x2="420" y2="370" stroke="#2c3e50" stroke-width="1.2"/>
+  <line x1="420" y1="370" x2="660" y2="370" stroke="#2c3e50" stroke-width="1.2"/>
+  <line x1="660" y1="174" x2="660" y2="200" stroke="#2c3e50" stroke-width="1.5"/>
+  <line x1="660" y1="370" x2="660" y2="395" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Diamond 2 -->
+  <polygon points="740,400 830,437 740,474 650,437" fill="#fff3e0" stroke="#2c3e50" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="740" y="432" class="lbl" font-size="10">Step 4: 名称匹配?</text>
+  <text x="740" y="448" class="sm" font-size="9">c_i.name子串 ∈ Q ?</text>
+  <line x1="830" y1="437" x2="870" y2="437" stroke="#2c3e50" stroke-width="1.5"/>
+  <line x1="870" y1="437" x2="870" y2="370" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="842" y="430" class="sm" font-size="9">Y</text>
+  <rect x="805" y="340" width="130" height="36" rx="6" fill="#e8f8e8" stroke="#27ae60" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="870" y="362" class="lbl" fill="#27ae60">Score += 3</text>
+  <line x1="740" y1="474" x2="740" y2="500" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="750" y="492" class="sm" font-size="9">N</text>
+  <rect x="685" y="504" width="110" height="36" rx="6" fill="#f5f5f5" stroke="#999" stroke-width="1" filter="url(#shadow)"/>
+  <text x="740" y="526" class="lbl" fill="#999">Score不变</text>
+
+  <!-- Merge to Step 5 -->
+  <line x1="870" y1="376" x2="900" y2="376" stroke="#2c3e50" stroke-width="1.2"/>
+  <line x1="900" y1="376" x2="900" y2="555" stroke="#2c3e50" stroke-width="1.2"/>
+  <line x1="740" y1="540" x2="740" y2="560" stroke="#2c3e50" stroke-width="1.2"/>
+  <line x1="740" y1="560" x2="900" y2="560" stroke="#2c3e50" stroke-width="1.2"/>
+  <line x1="900" y1="555" x2="900" y2="560" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 5 -->
+  <rect x="50" y="420" width="260" height="60" rx="6" fill="#e8f8e8" stroke="#2c3e50" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="180" y="443" class="lbl">Step 5: 排序筛选</text>
+  <text x="180" y="461" class="sm">按Score降序排列，取Top-3</text>
+  <text x="180" y="477" class="sm">(仅保留Score > 0的候选)</text>
+  <line x1="180" y1="480" x2="180" y2="502" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 6 -->
+  <rect x="50" y="507" width="260" height="60" rx="6" fill="#e8e8f8" stroke="#2c3e50" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="180" y="530" class="lbl">Step 6: 逐一Cypher查询</text>
+  <text x="180" y="548" class="sm">MATCH (e)-[r]->(n) RETURN ...</text>
+  <text x="180" y="564" class="sm">输出结构化知识 K_graph</text>
+  <line x1="180" y1="567" x2="180" y2="585" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="100" y="588" width="160" height="30" rx="15" fill="#e74c3c" filter="url(#shadow)"/>
+  <text x="180" y="608" class="lbl" fill="#fff" font-size="11">END: 知识供LLM生成</text>
+</svg>

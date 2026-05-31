@@ -1,0 +1,57 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Database & Storage
+chroma_db/
+neo4j_data/
+users.db
+migrate_backup.json
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+
+# Sensitive
+.env
+*.key
+*.pem
+
+# Temp / Large files
+preview/
+*.jpg
+*.png
+thesis_preview.json
+grape—garden.jpg
+
+# Session data
+.superpowers/
+
+# Thesis (sensitive, not for public repo)
+毕业论文/
+para_*.txt
+verify_*.txt
+task_book*
+
+# Utility scripts (not part of the project)
+edit_docx.py
+fill_weekly.py
+update_taskbook*.py
+convert_to_docx.py
+extract_doc.ps1
+final_update*.py
+
+# Diagrams source files
+diagrams/*.pptx
+
+# Eval results (large JSON)
+docs/superpowers/*.json
+
+# Local models
+llm_models/

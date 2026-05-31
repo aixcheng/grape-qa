@@ -1,0 +1,70 @@
+知识图谱实体与关系体系
+1. 实体类别汇总
+目前图谱共包含 14 类实体，覆盖葡萄病虫害的核心领域知识。
+
+实体类别	标签	说明	在 GraphRAG 中的作用
+葡萄病害	Disease	葡萄常见真菌、细菌、病毒、类病毒病害	核心实体，问答的主要查询对象
+葡萄虫害	Pest	葡萄常见昆虫及螨类害虫	核心实体，问答的主要查询对象
+病虫害别称	Alias	病害或虫害的俗名、别称	支持自然语言中的多样称呼匹配
+为害症状	Symptom	病虫害在植株上的可见表现	支持从症状反向诊断病虫害
+为害部位	Part	受害的植物器官（叶、果、枝蔓等）	支持按部位筛选和推理
+发病规律	Rule	病虫害的发生时间、条件、传播方式	支持预测预警类问答
+防治方法	Method	农业、物理、生物防治措施	提供综合防治建议
+防治药剂	Drug	农药名称（有效成分）	药剂查询和替代推荐
+治疗方案	Treatment	具体药剂、剂量、时期、使用方法	精准的用药指导
+病原	Pathogen	病害的病原菌（学名、分类）	支持病因解释
+形态特征	Characteristic	害虫各虫态的形态描述	支持害虫识别问答
+环境条件	Condition	有利于病虫害发生的气象、土壤条件	支持条件推理和预警
+发生时期	Period	病虫害发生的关键时间节点	支持时间推理和防治适期推荐
+传播媒介	Vector	传播病原的生物（如线虫）	解释病害传播机制
+2. 关系类别汇总
+图谱共包含 16 种语义关系，构成有向、双向、多层级的语义网络。
+
+关系类型	起点实体	终点实体	语义含义
+HAS_ALIAS	Disease / Pest	Alias	有别名
+ALIAS_OF	Alias	Disease / Pest	是…的别名（反向）
+HAS_SYMPTOM	Disease / Pest	Symptom	表现为症状
+SYMPTOM_OF	Symptom	Disease / Pest	是什么病的症状（反向）
+AFFECTS_PART	Disease / Pest	Part	危害部位
+PART_AFFECTED_BY	Part	Disease / Pest	受什么危害（反向）
+HAS_RULE	Disease / Pest	Rule	遵循发病规律
+HAS_METHOD	Disease / Pest	Method	有防治方法
+HAS_TREATMENT	Disease / Pest	Treatment	有具体治疗方案
+USES_DRUG	Treatment	Drug	使用药剂
+HAS_PATHOGEN	Disease	Pathogen	由病原引起
+HAS_CHARACTERISTIC	Pest	Characteristic	具有形态特征
+FAVORED_BY	Disease / Pest	Condition	适宜条件
+OCCURS_IN	Disease / Pest	Period	发生于某时期
+AGGRAVATES	Pest	Disease	虫害加剧病害
+TRANSMITTED_BY	Disease	Vector	由媒介传播
+二、面向 GraphRAG 的优势分析
+1. 双向关系支持正向查询与反向诊断
+传统病虫害知识图谱多为单向树状结构（病害→症状）。本图谱为每个核心关系建立了显式的逆向边（如 HAS_SYMPTOM 与 SYMPTOM_OF），使系统能同时响应两类问题：
+
+前向查询：“葡萄霜霉病有什么症状？”
+
+后向诊断：“叶片出现白色霜霉状物，可能是什么病？”
+
+在 GraphRAG 检索阶段，显式的双向关系使子图遍历更加精准，避免了无向查询的遍历开销。
+
+2. 治疗方案细粒度建模
+将“防治药剂”拆分为 Drug（药名） 与 Treatment（治疗方案） 两级实体，通过 USES_DRUG 关联。
+
+Treatment 节点携带了剂量、浓度、剂型、施用时期、使用方法等具体信息。
+
+支持回答“50%多菌灵打霜霉病用多少倍液？”这类需要具体参数的问题。
+
+多个 Treatment 可复方关联多种 Drug，反映实际生产中的复配用药习惯。
+
+3. 环境条件与发生时期的推理能力
+引入 Condition（环境条件） 和 Period（发生时期） 实体，使图谱具备多跳推理能力：
+
+用户问：“最近连续下雨，我要防什么病？” → 系统可沿 降雨频繁 → 高湿 → 葡萄霜霉病 路径推理。
+
+用户问：“8月份果穗上出现褐色病斑，果粒易脱落，是什么病？” → 结合时期和部位推理，候选病种可能为白腐病。
+
+4. 跨病虫害关联
+建立了 AGGRAVATES（虫害加剧病害） 关系，反映虫害造成的伤口可诱发或加重病害的生态事实。这使系统整合了病虫害的交互效应，答案更具综合性。
+
+5. 属性与结构化信息的结合
+每个实体节点均携带 description 字段，存储原文中的详细描述文本。这使得图谱在提供结构化的关系三元组之外，还能为 LLM 提供长文本上下文，提升生成答案的专业性和细节丰富度。

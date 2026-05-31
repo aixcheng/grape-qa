@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#2c3e50"/>
+    </marker>
+    <filter id="sh"><feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.08"/></filter>
+  </defs>
+  <style>
+    text { font-family: "Microsoft YaHei","SimHei",sans-serif; }
+    .tt { font-size: 18px; font-weight: bold; fill: #1a1a2e; text-anchor: middle; }
+    .lbl { font-size: 11px; fill: #2c3e50; text-anchor: middle; }
+    .sm { font-size: 9px; fill: #555; text-anchor: middle; }
+    .phase { font-size: 13px; font-weight: bold; fill: #fff; text-anchor: middle; }
+  </style>
+  <rect width="1100" height="620" fill="#fafbfc"/>
+  <text x="550" y="28" class="tt">图X  知识抽取与图谱构建流程（12步四阶段）</text>
+
+  <!-- Phase bars -->
+  <rect x="10" y="50" width="1060" height="32" rx="4" fill="#5b9bd5"/>
+  <text x="260" y="71" class="phase">阶段一：数据预处理</text>
+
+  <rect x="10" y="160" width="1060" height="32" rx="4" fill="#70ad47"/>
+  <text x="260" y="181" class="phase">阶段二：节点创建（多策略匹配）</text>
+
+  <rect x="10" y="320" width="1060" height="32" rx="4" fill="#ed7d31"/>
+  <text x="260" y="341" class="phase">阶段三：关系创建</text>
+
+  <rect x="10" y="410" width="1060" height="32" rx="4" fill="#8e44ad"/>
+  <text x="260" y="431" class="phase">阶段四：嫁接优化</text>
+
+  <!-- Phase 1 boxes -->
+  <rect x="30" y="88" width="300" height="62" rx="6" fill="#fff" stroke="#5b9bd5" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="180" y="110" class="lbl">① 文本收集</text>
+  <text x="180" y="128" class="sm">40个UTF-8 txt文件 (20病害+20虫害)</text>
+  <text x="180" y="144" class="sm">源自《葡萄病虫害诊断与防治原色图谱》</text>
+
+  <rect x="380" y="88" width="250" height="62" rx="6" fill="#fff" stroke="#5b9bd5" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="505" y="110" class="lbl">② 章节分割</text>
+  <text x="505" y="128" class="sm">按标准编号(1./2./3.)拆分为</text>
+  <text x="505" y="144" class="sm">为害症状/病原/发病规律/防治方法</text>
+
+  <rect x="680" y="88" width="250" height="62" rx="6" fill="#fff" stroke="#5b9bd5" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="805" y="110" class="lbl">③ 语句拆分</text>
+  <text x="805" y="128" class="sm">按句号/分号拆分为</text>
+  <text x="805" y="144" class="sm">独立知识条目</text>
+
+  <line x1="330" y1="119" x2="380" y2="119" stroke="#5b9bd5" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="630" y1="119" x2="680" y2="119" stroke="#5b9bd5" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="505" y1="150" x2="505" y2="200" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Phase 2 boxes -->
+  <rect x="30" y="198" width="200" height="55" rx="6" fill="#fff" stroke="#70ad47" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="130" y="218" class="lbl">④ 精确匹配</text>
+  <text x="130" y="236" class="sm">Neo4j中按标签查找同名节点</text>
+  <text x="130" y="250" class="sm">name完全一致 → 命中</text>
+
+  <rect x="250" y="198" width="200" height="55" rx="6" fill="#fff" stroke="#70ad47" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="350" y="218" class="lbl">⑤ 模糊匹配</text>
+  <text x="350" y="236" class="sm">前15字符子串模糊查找</text>
+  <text x="350" y="250" class="sm">substring ∈ Ne[0:15] → 命中</text>
+
+  <rect x="470" y="198" width="200" height="55" rx="6" fill="#fff" stroke="#70ad47" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="570" y="218" class="lbl">⑥ 语义匹配</text>
+  <text x="570" y="236" class="sm">BGE编码 → cosine &gt; 0.7</text>
+  <text x="570" y="250" class="sm">向量相似度最高者 → 命中</text>
+
+  <polygon points="710,210 760,238 710,265 660,238" fill="#fff3e0" stroke="#2c3e50" stroke-width="1.5"/>
+  <text x="710" y="236" class="sm" font-size="8">任意层命中?</text>
+
+  <rect x="780" y="198" width="190" height="55" rx="6" fill="#e8f8e8" stroke="#70ad47" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="875" y="218" class="lbl">⑦ 创建新节点</text>
+  <text x="875" y="236" class="sm">三层均未命中</text>
+  <text x="875" y="250" class="sm">→ 截取前200字符新建</text>
+
+  <line x1="230" y1="225" x2="250" y2="225" stroke="#70ad47" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="450" y1="225" x2="470" y2="225" stroke="#70ad47" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="670" y1="225" x2="710" y2="225" stroke="#70ad47" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="660" y1="238" x2="700" y2="238" stroke="#2c3e50" stroke-width="1.5"/>
+  <line x1="760" y1="238" x2="780" y2="238" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <line x1="570" y1="253" x2="570" y2="365" stroke="#2c3e50" stroke-width="1.5"/>
+  <line x1="875" y1="253" x2="875" y2="365" stroke="#2c3e50" stroke-width="1.5"/>
+  <line x1="570" y1="365" x2="570" y2="360" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Phase 3 boxes -->
+  <rect x="30" y="350" width="400" height="55" rx="6" fill="#fff" stroke="#ed7d31" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="230" y="372" class="lbl">⑧ 正向关系建立</text>
+  <text x="230" y="390" class="sm">章节标题 → 关系类型映射表 → 创建HAS_SYMPTOM/HAS_TREATMENT等正向边</text>
+
+  <rect x="480" y="350" width="400" height="55" rx="6" fill="#fff" stroke="#ed7d31" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="680" y="372" class="lbl">⑨ 反向关系建立</text>
+  <text x="680" y="390" class="sm">根据REL_MAP自动创建SYMPTOM_OF/PART_AFFECTED_BY等反向边</text>
+
+  <line x1="430" y1="375" x2="480" y2="375" stroke="#ed7d31" stroke-width="2" marker-end="url(#arr)"/>
+
+  <line x1="230" y1="405" x2="230" y2="445" stroke="#2c3e50" stroke-width="1.5"/>
+  <line x1="680" y1="405" x2="680" y2="445" stroke="#2c3e50" stroke-width="1.5"/>
+  <line x1="230" y1="445" x2="680" y2="445" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Phase 4 boxes -->
+  <rect x="30" y="448" width="300" height="55" rx="6" fill="#fff" stroke="#8e44ad" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="180" y="470" class="lbl">⑩ 空白节点归属判定</text>
+  <text x="180" y="488" class="sm">收集Bridge Node的所有连接属性节点</text>
+  <text x="180" y="502" class="sm">→ 遍历40文件以出现次数评分归属</text>
+
+  <rect x="370" y="448" width="300" height="55" rx="6" fill="#fff" stroke="#8e44ad" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="520" y="470" class="lbl">⑪ 直连关系嫁接</text>
+  <text x="520" y="488" class="sm">创建Disease/Pest→属性节点的直接关系</text>
+  <text x="520" y="502" class="sm">跳过已存在的重复关系，同时建立反向边</text>
+
+  <rect x="710" y="448" width="260" height="55" rx="6" fill="#fff" stroke="#8e44ad" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="840" y="470" class="lbl">⑫ 清理桥接节点</text>
+  <text x="840" y="488" class="sm">删除所有空白Bridge Node</text>
+  <text x="840" y="502" class="sm">图拓扑: 多级间接 → 单跳直连</text>
+
+  <line x1="330" y1="475" x2="370" y2="475" stroke="#8e44ad" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="670" y1="475" x2="710" y2="475" stroke="#8e44ad" stroke-width="2" marker-end="url(#arr)"/>
+
+  <line x1="520" y1="503" x2="520" y2="540" stroke="#2c3e50" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Output -->
+  <rect x="280" y="548" width="500" height="48" rx="6" fill="#e8f8e8" stroke="#27ae60" stroke-width="2" filter="url(#sh)"/>
+  <text x="530" y="570" class="lbl" font-size="12" fill="#27ae60">产出: Neo4j图数据库 (781节点 1227边 14类实体 16种关系)</text>
+  <text x="530" y="588" class="sm">+ ChromaDB向量知识库 (105文本块 BGE-large-zh 1024维)</text>
+</svg>

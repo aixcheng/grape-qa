@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><title>论文流程图预览</title>
+<style>
+  body { font-family: "Microsoft YaHei", sans-serif; background: #f0f0f0; margin: 20px; }
+  h2 { color: #1a1a2e; border-bottom: 2px solid #2c3e50; padding-bottom: 8px; margin-top: 30px; }
+  .card { background: #fff; border-radius: 8px; padding: 20px; margin: 16px 0;
+          box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+  img, svg, object { max-width: 100%; display: block; margin: 10px auto; }
+  a { color: #2c3e50; text-decoration: none; }
+</style></head>
+<body>
+<h1 style="text-align:center">论文流程图 — 4张</h1>
+
+<div class="card">
+  <h2>1. AC自动机实体匹配算法流程</h2>
+  <p>含BGE语义回退分支 | 替换 表4.X | 放入第4章 4.2.1节</p>
+  <object data="01_ac_automaton.svg" type="image/svg+xml" style="width:100%"></object>
+</div>
+
+<div class="card">
+  <h2>2. 反向诊断候选评分算法流程</h2>
+  <p>6步含交叉验证+名称匹配评分逻辑 | 替换 表X.X | 放入第4章 4.2.3节</p>
+  <object data="02_reverse_diagnosis.svg" type="image/svg+xml" style="width:100%"></object>
+</div>
+
+<div class="card">
+  <h2>3. 基于HybridRAG的问答算法处理流程</h2>
+  <p>8步分层流水线（实体识别→解析→双路检索→融合→生成） | 替换 表X.X | 放入第4章 4.3节</p>
+  <object data="03_qa_pipeline.svg" type="image/svg+xml" style="width:100%"></object>
+</div>
+
+<div class="card">
+  <h2>4. 知识抽取与图谱构建流程</h2>
+  <p>12步四阶段（预处理→节点创建→关系创建→嫁接优化） | 替换 表X.X | 放入第3章 3.3节</p>
+  <object data="04_kg_construction.svg" type="image/svg+xml" style="width:100%"></object>
+</div>
+
+</body></html>
