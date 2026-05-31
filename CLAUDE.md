@@ -5,7 +5,7 @@
 ## 项目约定
 
 - **Python venv**: `venv/`，启动用 `venv/Scripts/python.exe`
-- **Neo4j**: 必须先启动，`neo4j://127.0.0.1:7687`，认证 `neo4j/xjcdllg666@`
+- **Neo4j**: 必须先启动，`neo4j://127.0.0.1:7687`，密码通过环境变量 `NEO4J_PASSWORD` 设置
 - **LLM**: DeepSeek-chat，需环境变量 `DEEPSEEK_API_KEY`
 - **论文终稿**: `毕业论文/大连理工大学本科毕业论文终稿.docx`，任何内容修改必须以系统实际代码为准
 - **不要无中生有**: 论文全部数据来自系统真实测试，禁止编造

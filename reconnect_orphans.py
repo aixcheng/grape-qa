@@ -6,7 +6,8 @@ import re
 import glob
 from py2neo import Graph
 
-graph = Graph("neo4j://127.0.0.1:7687", auth=("neo4j", "xjcdllg666@"))
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "")
+graph = Graph("neo4j://127.0.0.1:7687", auth=("neo4j", NEO4J_PASSWORD))
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data", "texts")
 
 # 关系映射：属性标签 → (正向关系, 反向关系)

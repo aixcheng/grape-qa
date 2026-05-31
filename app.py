@@ -20,7 +20,8 @@ app = Flask(__name__)
 CORS(app)
 
 # Neo4j
-graph = Graph("neo4j://127.0.0.1:7687", auth=("neo4j", "xjcdllg666@"))
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "")
+graph = Graph("neo4j://127.0.0.1:7687", auth=("neo4j", NEO4J_PASSWORD))
 
 # 
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
