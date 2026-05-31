@@ -41,6 +41,3 @@ venv/Scripts/python.exe app.py    # :5000
 cd frontend && npm run dev
 ```
 
-## 作者
-
-肖杰成 (aixcheng) — 独立完成 · 毕业论文课题
